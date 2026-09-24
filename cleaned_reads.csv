@@ -1,0 +1,5 @@
+read_id,sequence,phred_score,sample_type,gc_content
+R001,ATGCGATCGAT,38.0,Blood,45.2
+R004,GCTAGCTAGCA,40.0,Blood,54.5
+R005,GCTAGCTAGCA,38.0,Blood,54.5
+R006,ATGCGATCGAT,35.0,Saliva,45.2
