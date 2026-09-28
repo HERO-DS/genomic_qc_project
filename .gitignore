@@ -1,0 +1,15 @@
+# Installation installers
+*.sh
+
+# Nextflow runtime logs & execution directories
+.nextflow/
+.nextflow.log*
+work/
+results/
+
+# Output generated files
+cleaned_reads.csv
+
+# Python cache
+__pycache__/
+*.pyc
