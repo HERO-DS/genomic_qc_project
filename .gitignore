@@ -13,3 +13,4 @@ cleaned_reads.csv
 # Python cache
 __pycache__/
 *.pyc
+cleaned_reads.csv
