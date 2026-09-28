@@ -1,16 +1,7 @@
-# Installation installers
-*.sh
-
-# Nextflow runtime logs & execution directories
+work/
 .nextflow/
 .nextflow.log*
-work/
 results/
-
-# Output generated files
-cleaned_reads.csv
-
-# Python cache
-__pycache__/
-*.pyc
-cleaned_reads.csv
+*.csv
+*.txt
+*.fastq

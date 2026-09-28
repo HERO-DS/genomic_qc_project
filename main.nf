@@ -1,11 +1,17 @@
 nextflow.enable.dsl=2
 
 /*
-   Process 1: Run FastQC on each raw FASTQ file individually
+   Pipeline Parameters (with defaults)
+*/
+params.input  = "*.fastq"
+params.outdir = "results"
+
+/*
+   Process 1: Run FastQC
 */
 process FASTQC {
     tag "FastQC on ${reads.fileName}"
-    publishDir "results/fastqc", mode: 'copy'
+    publishDir "${params.outdir}/fastqc", mode: 'copy'
 
     input:
     path reads
@@ -20,10 +26,10 @@ process FASTQC {
 }
 
 /*
-   Process 2: Aggregate all FastQC outputs into a single MultiQC report
+   Process 2: Aggregate with MultiQC
 */
 process MULTIQC {
-    publishDir "results/multiqc", mode: 'copy'
+    publishDir "${params.outdir}/multiqc", mode: 'copy'
 
     input:
     path qc_files
@@ -39,15 +45,19 @@ process MULTIQC {
 }
 
 /*
-   Workflow: Connect Channels across Processes
+   Workflow Execution
 */
 workflow {
-    // 1. Create a channel for all FASTQ files in the directory
-    fastq_ch = Channel.fromPath("*.fastq")
+    log.info """
+    ==================================================
+    G E N O M I C   Q C   P I P E L I N E
+    ==================================================
+    Input files : ${params.input}
+    Output dir  : ${params.outdir}
+    ==================================================
+    """
 
-    // 2. Run FastQC on each FASTQ file
+    fastq_ch = Channel.fromPath(params.input, checkIfExists: true)
     FASTQC(fastq_ch)
-
-    // 3. Collect all outputs from FastQC into a single list and pass to MultiQC
     MULTIQC(FASTQC.out.qc_files.collect())
 }
